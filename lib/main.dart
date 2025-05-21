@@ -15,7 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Gasolina ou Alcool?',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF66BB6A), // A primary green
+        ),        
         useMaterial3: true,
         fontFamily: 'Roboto', // Example: Use a different font
       ),
@@ -50,7 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
         String valorAjustado = _inputController.text.replaceAll(',', '.');
         double inputValue = double.parse(valorAjustado);
         _resultado = inputValue * 0.7;
-        _mensagem = 'Compre GASOLINA se o preço do ALCOOL for maior que: R\$ ${formatarDecimalBrasileiro(_resultado)}';        
+        _mensagem = 
+            'Compre GASOLINA se o preço do ALCOOL for maior que: R\$ ${formatarDecimalBrasileiro(_resultado)} \n' +
+            'Compre ALCOOL se seu preço for menor que R\$ ${formatarDecimalBrasileiro(_resultado)}';
       } catch (e) {
         _resultado = 0.0;
       }
@@ -68,15 +73,24 @@ class _MyHomePageState extends State<MyHomePage> {
           style: const TextStyle(color: Colors.white),
         ),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,          
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             
+            // // Logo or Image (Example)
+            // Image.asset(
+            //   'assets/logo.png', // Replace with your asset path
+            //   height: 100,
+            // ),
+
             SizedBox(
-              width: 100,
+              width: 150,
               child:
                 TextFormField(
+                  style: const TextStyle(fontSize: 36, fontFamily: 'Roboto'),
                   // initialValue: formatarDecimalBrasileiro(6),
                   controller: _inputController,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -86,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     // Esta regex é um ponto de partida.
                   ],                  
                   decoration: InputDecoration(
-                    labelText: 'GASOLINA',   // Valor até 9,99 em Reais
+                    labelText: 'PREÇO DA GASOLINA',   // Valor até 9,99 em Reais
                     border: OutlineInputBorder(),
                     prefixText: 'R\$ ',
                   ),
@@ -111,25 +125,22 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: _calcular,
                 style: ElevatedButton.styleFrom(
                   // padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  textStyle: const TextStyle(fontSize: 18),
+                  textStyle: const TextStyle(fontSize: 36, fontFamily: 'Roboto'),
                 ),
-                child: const Text('Calcular'),
+                child: const Text('CALCULAR'),
             ),
-            SizedBox(height: _spacing),
+            
+            SizedBox(height: _spacing*3),
             Text(
               _mensagem,
-              style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, backgroundColor: Colors.green, color: Colors.white),
+              textAlign: TextAlign.center,
             ),
 
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
