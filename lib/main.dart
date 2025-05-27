@@ -32,7 +32,8 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 15.0), // Preenchimento do botão
+            padding:
+                EdgeInsets.symmetric(vertical: 15.0), // Preenchimento do botão
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0), // Bordas arredondadas
             ),
@@ -47,7 +48,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
   final String title;
 
   @override
@@ -56,7 +56,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>(); // Chave para validar o formulário
-  
+
   final TextEditingController _inputController = TextEditingController();
   double _resultado = 0.0;
   bool _showResultContainer = false; // NOVA VARIÁVEL DE ESTADO
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String formatarDecimalBrasileiro(double valor) {
     final formatoBrasileiro = NumberFormat("#,##0.00", "pt_BR");
     return formatoBrasileiro.format(valor);
-  }  
+  }
 
   void _calcular() {
     // Valida o formulário antes de tentar o cálculo
@@ -95,14 +95,16 @@ class _MyHomePageState extends State<MyHomePage> {
           final double valor = double.parse(texto.replaceAll(',', '.'));
           setState(() {
             _resultado = valor * 0.7;
-            _showResultContainer = true; // MOSTRA O CONTAINER APÓS CÁLCULO BEM-SUCEDIDO
-            _mensagem = 'Compre GASOLINA se preço do ALCOOL maior que: R\$ ${formatarDecimalBrasileiro(_resultado)}';
+            _showResultContainer =
+                true; // MOSTRA O CONTAINER APÓS CÁLCULO BEM-SUCEDIDO
+            _mensagem =
+                'Compre GASOLINA se preço do ALCOOL maior que: R\$ ${formatarDecimalBrasileiro(_resultado)}';
           });
-        }
-        catch (e) {
+        } catch (e) {
           // Em caso de erro de parsing, exibe snackbar e esconde o container
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Valor inválido. Insira um número até 9,99.')),
+            const SnackBar(
+                content: Text('Valor inválido. Insira um número até 9,99.')),
           );
           setState(() {
             _resultado = 0.0;
@@ -115,14 +117,13 @@ class _MyHomePageState extends State<MyHomePage> {
           _resultado = 0.0;
           _showResultContainer = false; // ESCONDE O CONTAINER SE INPUT VAZIO
         });
-      }        
+      }
     } else {
       // Se a validação do formulário falhar, esconde o container
       setState(() {
         _showResultContainer = false;
       });
     }
-
   }
 
   @override
@@ -132,137 +133,186 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Center(
-          child: Text(
-            widget.title,
-            style: const TextStyle(color: Colors.white),
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          title: Center(
+            child: Text(
+              widget.title,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
-        ), 
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Center(
-        child: Form(
-          key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        ),
+        body: Stack(  // O Stack permite sobrepor e posicionar widgets
           children: <Widget>[
-            
-            Image.asset(
-              'images/bomba_combustivel.jpg', 
-              height: 80,
-            ),
-            SizedBox(height: _spacing),
+            Positioned(
+              top: 80.0,
+              left: 20.0,
+              right: 20.0,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          'images/bomba_combustivel.jpg',
+                          height: 80,
+                        ),
+                        SizedBox(height: _spacing),
 
-            SizedBox(
-              width: 150,
-              child:
-                TextFormField(
-                  style: const TextStyle(fontSize: 30, fontFamily: 'Roboto'),
-                  autofocus: true, // Foca no campo ao abrir a tela
-                  // initialValue: formatarDecimalBrasileiro(6),
-                  controller: _inputController,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'^\d(?:[\,]\d{0,2})?')), // Permite digitos, opcionalmente uma virgula/ponto e até 2 casas decimais
-                    // Nota: Uma implementação mais robusta para formatos monetários pode ser necessária dependendo da complexidade.
-                    // Esta regex é um ponto de partida.
-                  ],                  
-                  decoration: InputDecoration(
-                    labelText: 'PREÇO DA GASOLINA',   // Valor até 9,99 em Reais
-                    border: OutlineInputBorder(),
-                    prefixText: 'R\$ ',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Insira um valor';
-                    }
-                    // Exemplo básico de validação se quiser garantir que se parece com um número
-                    // Uma validação mais completa pode converter para double e verificar
-                    if (!RegExp(r'^\d(?:[\,]\d{0,2})?').hasMatch(value)) {
-                      // Esta regex verifica um formato mais específico: digitos, opcionalmente virgula/ponto e EXATAMENTE 2 casas decimais
-                      // Ajuste conforme a sua necessidade de validação
-                      return 'Formato de moeda inválido';
-                    }
-                    return null; // Indica que o valor é válido
-                  },
-                ),
-            ),
+                        SizedBox(
+                          width: 150,
+                          child: TextFormField(
+                            style: const TextStyle(
+                                fontSize: 30, fontFamily: 'Roboto'),
+                            autofocus: true, // Foca no campo ao abrir a tela
+                            // initialValue: formatarDecimalBrasileiro(6),
+                            controller: _inputController,
+                            keyboardType:
+                                TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d(?:[\,]\d{0,2})?')
+                                ), // Permite digitos, opcionalmente uma virgula/ponto e até 2 casas decimais
+                            ],
+                            decoration: InputDecoration(
+                              labelText:
+                                  'PREÇO DA GASOLINA', 
+                              border: OutlineInputBorder(),
+                              prefixText: 'R\$ ',
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Insira um valor';
+                              }
+                              if (!RegExp(r'^\d(?:[\,]\d{0,2})?')
+                                  .hasMatch(value)) {   // Valor até 9,99 em Reais
+                                return 'Formato de moeda inválido';
+                              }
+                              return null; // Indica que o valor é válido
+                            },
+                          ),
+                        ),
 
-            SizedBox(height: _spacing),
-            ElevatedButton(
-              onPressed: _calcular,
-                style: ElevatedButton.styleFrom(
-                  // padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  textStyle: const TextStyle(fontSize: 25, fontFamily: 'Roboto'),
-                ),
-                child: const Text('CALCULAR'),
-            ),
-            
-            SizedBox(height: _spacing),
+                        SizedBox(height: _spacing),
 
-              // --- ÁREA DE RESULTADO CONDICIONAL ---
-              // O AnimatedSwitcher e seu conteúdo só serão construídos se _showResultContainer for true
-            if (_showResultContainer)
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 500), // Duração da animação
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  // Efeito de fade e scale ao mudar o resultado
-                  return FadeTransition(
-                    opacity: animation,
-                    child: ScaleTransition(scale: animation, child: child),
-                  );
-                },
-                child: Container(
-                  // A chave precisa ser única para que AnimatedSwitcher detecte a mudança
-                  key: ValueKey<String>(_mensagem),
-                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor, // Usa a cor de fundo do Card do tema
-                    borderRadius: BorderRadius.circular(10.0), // Cantos arredondados
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.blue.shade100, // Sombra azul sutil
-                        spreadRadius: 2,
-                        blurRadius: 10,
-                        offset: const Offset(0, 5), // Deslocamento da sombra
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min, // Ocupa o mínimo de espaço vertical necessário
-                    children: [
+                        // ElevatedButton(
+                        //   onPressed: _calcular,
+                        //   style: ElevatedButton.styleFrom(
+                        //     // padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        //     textStyle: const TextStyle(
+                        //         fontSize: 25, fontFamily: 'Roboto'),
+                        //   ),
+                        //   child: const Text('CALCULAR'),
+                        // ),
 
-                    Text(
-                      _mensagem,
-                      style: TextStyle(fontSize: 18, color: Colors.green.shade700, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center                      
+                        SizedBox(
+                          width: 150, // Largura definida como 100 pixels
+                          child: GestureDetector(
+                            onTap: _calcular,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 16),
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [Colors.lightBlue, Colors.green],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.blue,
+                                    spreadRadius: 2,
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'CALCULAR',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(height: _spacing),
+
+                        // --- ÁREA DE RESULTADO CONDICIONAL ---
+                        // O AnimatedSwitcher e seu conteúdo só serão construídos se _showResultContainer for true
+                        if (_showResultContainer)
+                          AnimatedSwitcher(
+                            duration: const Duration(
+                                milliseconds: 500), // Duração da animação
+                            transitionBuilder:
+                                (Widget child, Animation<double> animation) {
+                              // Efeito de fade e scale ao mudar o resultado
+                              return FadeTransition(
+                                opacity: animation,
+                                child: ScaleTransition(
+                                    scale: animation, child: child),
+                              );
+                            },
+                            child: Container(
+                              // A chave precisa ser única para que AnimatedSwitcher detecte a mudança
+                              key: ValueKey<String>(_mensagem),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0, horizontal: 10.0),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context)
+                                    .cardColor, // Usa a cor de fundo do Card do tema
+                                borderRadius: BorderRadius.circular(
+                                    10.0), // Cantos arredondados
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.blue.shade100, // Sombra azul sutil
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 5), // Deslocamento da sombra
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize
+                                    .min, // Ocupa o mínimo de espaço vertical necessário
+                                children: [
+                                  Text(_mensagem,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.green.shade700,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center),
+                                ],
+                              ),
+                            ),
+                          ),
+                        // --- FIM DA ÁREA DE RESULTADO CONDICIONAL ---
+
+                        SizedBox(height: _spacing),
+                        const Text(
+                          'Obs: O cálculo é baseado na regra de 70% do preço da gasolina.',
+                          style: TextStyle(fontSize: 10, fontFamily: 'Roboto'),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
-                  
-                    ],
                   ),
                 ),
               ),
-              // --- FIM DA ÁREA DE RESULTADO CONDICIONAL ---
-
-            SizedBox(height: _spacing),
-            const Text(
-              'Obs: O cálculo é baseado na regra de 70% do preço da gasolina.',
-              style: TextStyle(fontSize: 10, fontFamily: 'Roboto'),
-              textAlign: TextAlign.center,
             ),
-
           ],
-        ),
-        ),
-      ),
-      ),
-    );
+        ));
   }
 }
