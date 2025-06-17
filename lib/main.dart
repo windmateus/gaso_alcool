@@ -149,8 +149,8 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Positioned(
               top: 80.0,
-              left: 20.0,
-              right: 20.0,
+              left: 10.0,
+              right: 10.0,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Center(
@@ -159,17 +159,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Image.asset(
-                          'images/bomba_combustivel.jpg',
-                          height: 80,
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundImage: AssetImage('images/bomba_combustivel.jpg'),
                         ),
+                        // Image.asset(
+                        //   'images/bomba_combustivel.jpg',
+                        //   height: 80,
+                        // ),
                         SizedBox(height: _spacing),
 
                         SizedBox(
                           width: 150,
                           child: TextFormField(
                             style: const TextStyle(
-                                fontSize: 30, fontFamily: 'Roboto'),
+                                fontSize: 30, fontFamily: 'Montserrat'),
                             autofocus: true, // Foca no campo ao abrir a tela
                             // initialValue: formatarDecimalBrasileiro(6),
                             controller: _inputController,
@@ -291,9 +295,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Text(_mensagem,
                                       style: TextStyle(
                                           fontSize: 18,
+                                          fontFamily: 'Montserrat',
                                           color: Colors.green.shade700,
                                           fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.center),
+                                          textAlign: TextAlign.center),
                                 ],
                               ),
                             ),
@@ -303,7 +308,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         SizedBox(height: _spacing),
                         const Text(
                           'Obs: O cálculo é baseado na regra de 70% do preço da gasolina.',
-                          style: TextStyle(fontSize: 10, fontFamily: 'Roboto'),
+                          style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.teal,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                       ],
