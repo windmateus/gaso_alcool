@@ -23,11 +23,11 @@ class MyApp extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: Colors.blue, width: 2.0),
+            borderSide: BorderSide(color: Color(0xFF448aff), width: 2.0),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+            borderSide: BorderSide(color:  Color(0xFF757575), width: 1.0),
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -137,7 +137,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          // backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: const Color(0xFF448AFF), // Azul claro
           title: Center(
             child: Text(
               widget.title,
@@ -145,7 +146,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        body: Stack(  // O Stack permite sobrepor e posicionar widgets
+        body: 
+        Stack(  // O Stack permite sobrepor e posicionar widgets
           children: <Widget>[
             Positioned(
               top: 80.0,
@@ -185,8 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ), // Permite digitos, opcionalmente uma virgula/ponto e até 2 casas decimais
                             ],
                             decoration: InputDecoration(
-                              labelText:
-                                  'PREÇO DA GASOLINA', 
+                              labelText:'PREÇO DA GASOLINA',
                               border: OutlineInputBorder(),
                               prefixText: 'R\$ ',
                             ),
@@ -224,7 +225,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   vertical: 16, horizontal: 16),
                               decoration: BoxDecoration(
                                 gradient: const LinearGradient(
-                                  colors: [Colors.lightBlue, Colors.green],
+                                  colors: [Color(0xFF448AFF), Color(0xFF4caf50)],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                 ),
@@ -288,6 +289,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ],
                               ),
+
                               child: Column(
                                 mainAxisSize: MainAxisSize
                                     .min, // Ocupa o mínimo de espaço vertical necessário
@@ -301,6 +303,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           textAlign: TextAlign.center),
                                 ],
                               ),
+
                             ),
                           ),
                         // --- FIM DA ÁREA DE RESULTADO CONDICIONAL ---
@@ -310,11 +313,40 @@ class _MyHomePageState extends State<MyHomePage> {
                           'Obs: O cálculo é baseado na regra de 70% do preço da gasolina.',
                           style: TextStyle(
                               fontSize: 10,
-                              color: Colors.teal,
+                              color: Color(0xFF212121),
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
+
+                        SizedBox(
+                          height: 20.0,
+                          child: Divider(
+                            color: Color(0xFFBDBDBD),
+                          ),
+                        ),
+
+                        Card(     // Antes era Container
+                          // padding: EdgeInsets.all(10.0),
+                          // color: Colors.white,
+                          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+                          child: ListTile(
+                            leading: Icon(
+                                Icons.email,
+                                color: Color(0xFF4CAF50),
+                            ),
+                            title: Text(
+                                'windmateus@gmail.com',
+                                style: TextStyle(
+                                  color: Color(0xFF212121),
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
+                            ),
+                          )
+                        ), 
+
                       ],
                     ),
                   ),
