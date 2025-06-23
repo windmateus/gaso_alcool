@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MyHomePage(title: 'GASOLINA ou ALCOOL - v0.1'),
+      home: const MyHomePage(title: 'GASOLINA ou ALCOOL - v0.2'),
     );
   }
 }
@@ -85,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _calcular() {
+    print('Iniciando cálculo com o valor: ${_inputController.text}');
     // Valida o formulário antes de tentar o cálculo
     if (_formKey.currentState!.validate()) {
       final String texto = _inputController.text;
@@ -155,7 +156,8 @@ class _MyHomePageState extends State<MyHomePage> {
               right: 10.0,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Center(
+                child: Expanded(      // colocado no lugar do Center
+                  flex: 2,            // Flexível para ocupar o espaço necessário (aqui não tem efeito)
                   child: Form(
                     key: _formKey,
                     child: Column(
