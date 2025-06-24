@@ -156,9 +156,11 @@ class _MyHomePageState extends State<MyHomePage> {
               right: 10.0,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Expanded(      // colocado no lugar do Center
-                  flex: 2,            // Flexível para ocupar o espaço necessário (aqui não tem efeito)
-                  child: Form(
+                child: 
+                // Expanded(      // colocado no lugar do Center
+                  // flex: 2,            // Flexível para ocupar o espaço necessário (aqui não tem efeito)
+                  // child: 
+                  Form(
                     key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -354,7 +356,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-            ),
+            // ),
           ],
         ));
   }
