@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
             _showResultContainer =
                 true; // MOSTRA O CONTAINER APÓS CÁLCULO BEM-SUCEDIDO
             _mensagem =
-                'Compre GASOLINA se preço do ALCOOL maior que: R\$ ${formatarDecimalBrasileiro(_resultado)}';
+                'É vantajoso comprar ALCOOL se o preço dele for menor que: R\$ ${formatarDecimalBrasileiro(_resultado)}';
           });
         } catch (e) {
           // Em caso de erro de parsing, exibe snackbar e esconde o container
@@ -295,12 +295,11 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
 
                               child: Column(
-                                mainAxisSize: MainAxisSize
-                                    .min, // Ocupa o mínimo de espaço vertical necessário
+                                mainAxisSize: MainAxisSize.min, // Ocupa o mínimo de espaço vertical necessário
                                 children: [
                                   Text(_mensagem,
                                       style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           fontFamily: 'Montserrat',
                                           color: Colors.green.shade700,
                                           fontWeight: FontWeight.bold),
@@ -314,13 +313,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
                         SizedBox(height: _spacing),
                         const Text(
-                          'Obs: O cálculo é baseado na regra de 70% do preço da gasolina.',
+                          'Obs: Cálculo baseado na regra de 70% do preço da gasolina.',
                           style: TextStyle(
                               fontSize: 10,
                               color: Color(0xFF212121),
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
+                              textAlign: TextAlign.center,
                         ),
 
                         SizedBox(
@@ -345,7 +344,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   color: Color(0xFF212121),
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16.0,
+                                  fontSize: 12.0,
                                 ),
                             ),
                           )
