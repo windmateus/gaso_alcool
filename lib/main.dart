@@ -299,7 +299,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   Text(_mensagem,
                                       style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 18,
                                           fontFamily: 'Montserrat',
                                           color: Colors.green.shade700,
                                           fontWeight: FontWeight.bold),
@@ -344,7 +344,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   color: Color(0xFF212121),
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 12.0,
+                                  fontSize: 14.0,
                                 ),
                             ),
                           )
