@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'calculo.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final TextEditingController _inputController = TextEditingController();
   double _resultado = 0.0;
-  bool _showResultContainer = false; // NOVA VARIÁVEL DE ESTADO
+  bool _showResultContainer = true; // NOVA VARIÁVEL DE ESTADO
   String _mensagem = '';
   final double _spacing = 30.0;
 
@@ -91,13 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
       final String texto = _inputController.text;
       if (texto.isNotEmpty) {
         try {
-          // String valorAjustado = valor.replaceAll(',', '.');
-          // double inputValue = double.parse(valorAjustado);
-          final double valor = double.parse(texto.replaceAll(',', '.'));
+          final double precoGasolina = double.parse(texto.replaceAll(',', '.'));
           setState(() {
-            _resultado = valor * 0.7;
-            _showResultContainer =
-                true; // MOSTRA O CONTAINER APÓS CÁLCULO BEM-SUCEDIDO
+            // Cria uma instância de Calculo e calcula o valor do álcool
+            Calculo calculo = Calculo(precoGasolina);
+            _resultado = calculo.calcularAlcool();
+            _showResultContainer = true; // MOSTRA O CONTAINER APÓS CÁLCULO BEM-SUCEDIDO
             _mensagem =
                 'É vantajoso comprar ALCOOL se o preço dele for menor que: R\$ ${formatarDecimalBrasileiro(_resultado)}';
           });
@@ -125,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _showResultContainer = false;
       });
     }
+    FocusScope.of(context).unfocus();    
   }
 
   @override
